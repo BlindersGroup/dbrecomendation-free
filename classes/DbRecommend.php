@@ -82,7 +82,7 @@ class DbRecommend extends ObjectModel
         return $result;
     }
 
-    public function getRecommend($id_product, $id_lang, $id_shop){
+    public static function getRecommend($id_product, $id_lang, $id_shop){
         $sql = "SELECT r.*, rl.*, a.*, al.*, tl.name as tag
             FROM "._DB_PREFIX_."dbrecomendation r
             INNER JOIN  "._DB_PREFIX_."dbrecomendation_lang rl
@@ -96,14 +96,14 @@ class DbRecommend extends ObjectModel
             WHERE r.id_product = '$id_product' AND a.active = 1";
         $recommendation = Db::getInstance()->getRow($sql);
 
-        $result = array(
+        $result = [
             'img' => _MODULE_DIR_ . 'dbaboutus/views/img/author/' . $recommendation['id_author'] . '.jpg',
             'name_author' => $recommendation['name'],
             'profession' => $recommendation['profession'],
             'tag' => $recommendation['tag'],
             'url_author' => Context::getContext()->link->getModuleLink('dbaboutus', 'author', array('rewrite' => $recommendation['link_rewrite'])),
             'recomendation' => $recommendation['recomendation']
-        );
+        ];
 
         return $result;
     }
